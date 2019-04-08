@@ -18,13 +18,19 @@ object Application extends HttpApp with App with ErrorAccumulatingCirceSupport {
           complete(userRepository.insert(createUser)))
       } ~
         get {
-          path(LongNumber) { id =>
-            userRepository.findById(id) match {
+          pathEndOrSingleSlash {
+            complete(userRepository.list())
+
+          } ~ path(LongNumber) { id =>
+            val res = userRepository.findById(id)
+            onSuccess(res) {
               case Some(user) => complete(user)
               case _          => complete(StatusCodes.NotFound)
             }
           }
+
         }
+
     }
 
   startServer("localhost", 9090)

@@ -48,7 +48,8 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
   "io.getquill" %% "quill-core",
-  "io.getquill" %% "quill-jdbc"
+  "io.getquill" %% "quill-jdbc",
+  "io.getquill" %% "quill-async-postgres" 
 ).map(_ % "3.1.0")
 
 
