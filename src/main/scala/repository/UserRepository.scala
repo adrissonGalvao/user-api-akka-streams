@@ -21,7 +21,7 @@ class UserRepositoryImpl extends UserRepository {
   def findById(id: Long): Option[User] = {
 
     val q = quote {
-      query[User].filter(_.id == lift(id))
+      querySchema[User]("user_db.tb_user").filter(_.id == lift(id))
     }
 
     ctx.run(q).headOption
@@ -30,7 +30,7 @@ class UserRepositoryImpl extends UserRepository {
   def insert(createUser: CreateUser): User = {
 
     val q = quote {
-      query[User]
+      querySchema[User]("user_db.tb_user")
         .insert(lift(
           User(-1, createUser.name, createUser.username, createUser.birthDate)))
         .returning(_.id)
